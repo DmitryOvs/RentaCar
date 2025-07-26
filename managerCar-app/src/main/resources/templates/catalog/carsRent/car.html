@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>[[${car.brand}]] &ndash; Rolf</title>
+</head>
+<body>
+<a data-th-href="@{/catalog/carsRent/list}">&lAarr; К списку автомобилей</a>
+<h1 data-th-text="${car.brand}"></h1>
+<ul>
+    <li><strong>Номер учетной записи</strong>: <span data-th-text="${car.id}"></span> </li>
+    <li><strong>Бренд: </strong>: <span data-th-text="${car.brand}"></span> </li>
+    <li><strong>Модель: </strong>: <span data-th-text="${car.model}"></span> </li>
+    <li><strong>Государственный регистрационный номер: </strong>: <span data-th-text="${car.registrationNumber}"></span> </li>
+    <li><strong>Количество посадочных мест: </strong>: <span data-th-text="${car.seats}"></span> </li>
+    <li><strong>Стоимость аренды автомобиля: </strong>: <span data-th-text="${car.rentCost}"></span> </li>
+    <li><strong>Тип кузова автомобиля: </strong>: <span data-th-text="${car.type}"></span> </li>
+    <li><strong>Тип коробки передач автомобиля: </strong>: <span data-th-text="${car.gear}"></span> </li>
+    <li><strong>Тип потребляемого топлива двигателем автомобиля: </strong>: <span data-th-text="${car.fuel}"></span> </li>
+</ul>
+<a data-th-href="@{/catalog/carsRent/{carId}/edit(carId=${car.id})}"> Внести изменения в учетную запись параметров автомобиля</a>
+<form method="post" data-th-action="@{/catalog/carsRent/{carId}/delete(carId=${car.id})}">
+    <button type="submit">Удалить запись</button>
+</form>
+</body>
+</html>

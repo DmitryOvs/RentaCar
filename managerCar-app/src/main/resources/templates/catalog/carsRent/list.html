@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Список автомобилей &ndash; Rolf</title>
+</head>
+<body>
+<a data-th-href="@{/catalog/carsRent/create}">+ Внести в базу новый автомобиль</a>
+<h1>Список автомобилей</h1>
+<TABLE>
+    <thead>
+    <tr>
+        <th>#</th>
+        <th>Автомобиль</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr data-th-each="car : ${cars}">
+    <td data-th-text="${car.id}"></td>
+        <td>
+            <a data-th-href="@{/catalog/carsRent/{carId}(carId=${car.id})}"
+               data-th-text="${car.brand}"></a>
+        </td>
+
+    </tr>
+    </tbody>
+</TABLE>
+</body>
+</html>

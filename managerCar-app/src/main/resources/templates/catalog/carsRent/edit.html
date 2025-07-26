@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Редактирование характеристик автомобиля &laquo;[[${car.brand}]]&raquo; &ndash; Rolf</title>
+</head>
+<body>
+<a data-th-href="@{/catalog/carsRent/{carId}(carId=${car.id})}">&larr; К автомобилю</a>
+<h1>Редактирование характеристик автомобиля &laquo;[[${car.brand}]]</h1>
+<div data-th-if="${errors}">
+    <h2>Допущены ошибки</h2>
+    <ul>
+        <li data-th-each="error: ${errors}" data-th-text="${error}"></li>
+    </ul>
+</div>
+<form method="post" data-th-action="@{/catalog/carsRent/{carId}/edit(carId=${car.id})}">
+    <label>
+        Производитель:<br>
+        <input type="text" name="brand" data-th-value="${payload != null ? payload.brand : car.brand}">
+    </label><br>
+    <label>
+        Модель:<br>
+        <input type="text" name="model" data-th-value="${payload != null ? payload.model : car.model}">
+    </label><br>
+    <label>
+        Регистрационный номер:<br>
+        <input type="text" name="registrationNumber" data-th-value="${payload != null ? payload.registrationNumber : car.registrationNumber}">
+    </label><br>
+    <label>
+        Количество посадочных мест:<br>
+        <input type="text" name="seats" data-th-value="${payload != null ? payload.seats : car.seats}">
+    </label><br>
+    <label>
+        Стоимость аренды:<br>
+        <input type="text" name="rentCost" data-th-value="${payload != null ? payload.rentCost : car.rentCost}">
+    </label><br>
+    <label>
+        Тип кузова:<br>
+        <input type="text" name="type" data-th-value="${payload != null ? payload.type : car.type}">
+    </label><br>
+    <label>
+        Тип коробки передач:<br>
+        <input type="text" name="gear" data-th-value="${payload != null ? payload.gear : car.gear}">
+    </label><br>
+    <label>
+        Вид используемого топлива:<br>
+        <input type="text" name="fuel" data-th-value="${payload != null ? payload.fuel : car.fuel}">
+    </label><br>
+
+    <button type="submit">Сохранить изменения</button>
+</form>
+</body>
+</html>

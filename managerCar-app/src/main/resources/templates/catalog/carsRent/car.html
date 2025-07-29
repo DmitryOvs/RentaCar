@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+
     <title>[[${car.brand}]] &ndash; Rolf</title>
 </head>
 <body>
@@ -19,6 +20,7 @@
     <li><strong>Тип потребляемого топлива двигателем автомобиля: </strong>: <span data-th-text="${car.fuel}"></span> </li>
 </ul>
 <a data-th-href="@{/catalog/carsRent/{carId}/edit(carId=${car.id})}"> Внести изменения в учетную запись параметров автомобиля</a>
+
 <form method="post" data-th-action="@{/catalog/carsRent/{carId}/delete(carId=${car.id})}">
     <button type="submit">Удалить запись</button>
 </form>

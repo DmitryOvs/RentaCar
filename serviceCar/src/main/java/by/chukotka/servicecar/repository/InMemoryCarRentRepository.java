@@ -1,14 +1,15 @@
-package by.chukotka.manager.repository;
+package by.chukotka.servicecar.repository;
 
-import by.chukotka.manager.entity.CarRent;
+
+import by.chukotka.servicecar.entity.CarRent;
 import org.springframework.stereotype.Repository;
 
 import java.util.*;
 import java.util.stream.IntStream;
 
-import static by.chukotka.manager.entity.CarRent.Fuel.Petrol;
-import static by.chukotka.manager.entity.CarRent.Gear.Manual;
-import static by.chukotka.manager.entity.CarRent.TypeCar.SUV;
+import static by.chukotka.servicecar.entity.CarRent.Fuel.Petrol;
+import static by.chukotka.servicecar.entity.CarRent.Gear.Manual;
+import static by.chukotka.servicecar.entity.CarRent.TypeCar.SUV;
 
 @Repository
 public class InMemoryCarRentRepository implements CarRentRepository {
@@ -17,8 +18,8 @@ public class InMemoryCarRentRepository implements CarRentRepository {
 
     public InMemoryCarRentRepository() {      // Просто для проверки добавляем элементы
         IntStream.range(1,4)
-                .forEach(i -> {this.cars.add(new CarRent(i, "Бренд автомобиль №%d".formatted(i),
-                        "Модель автомобиля №%d".formatted(i), "Регистрационный номер автомобиля №%d".formatted(i),
+                .forEach(i -> {this.cars.add(new CarRent(i, "Brand",
+                        "Модель автомобиля", "а125ап25",
                         (short)(2+i), 50+2*i, SUV, Manual, Petrol));});
 
     }

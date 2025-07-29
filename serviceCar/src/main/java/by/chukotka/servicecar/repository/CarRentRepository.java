@@ -1,6 +1,8 @@
-package by.chukotka.manager.repository;
+package by.chukotka.servicecar.repository;
 
-import by.chukotka.manager.entity.CarRent;
+
+
+import by.chukotka.servicecar.entity.CarRent;
 
 import java.util.List;
 import java.util.Optional;

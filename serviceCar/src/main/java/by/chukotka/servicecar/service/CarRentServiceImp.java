@@ -1,7 +1,8 @@
-package by.chukotka.manager.service;
+package by.chukotka.servicecar.service;
 
-import by.chukotka.manager.entity.CarRent;
-import by.chukotka.manager.repository.CarRentRepository;
+
+import by.chukotka.servicecar.entity.CarRent;
+import by.chukotka.servicecar.repository.CarRentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -33,9 +34,9 @@ public class CarRentServiceImp implements CarRentService {
     }
 
     @Override
-    public void editCar(Integer id, String brand, String model, String registrationNumber, short seats,
+    public void editCar(Integer carId, String brand, String model, String registrationNumber, short seats,
                         int rentCost, CarRent.TypeCar type, CarRent.Gear gear, CarRent.Fuel fuel) {
-        this.carRentRepository.findById(id).ifPresentOrElse(car -> {
+        this.carRentRepository.findById(carId).ifPresentOrElse(car -> {
             car.setBrand(brand);
             car.setModel(model);
             car.setRegistrationNumber(registrationNumber);
@@ -44,7 +45,7 @@ public class CarRentServiceImp implements CarRentService {
             car.setType(type);
             car.setGear(gear);
             car.setFuel(fuel);
-        }, () -> {throw new NoSuchElementException("No car found with id " + id);});
+        }, () -> {throw new NoSuchElementException("No car found with id " + carId);});
     }
 
     @Override

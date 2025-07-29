@@ -1,17 +1,15 @@
 package by.chukotka.manager.controller;
 
+import by.chukotka.manager.client.CarsRentRestClient;
 import by.chukotka.manager.controller.payload.UpdateCarRentPayload;
 import by.chukotka.manager.entity.CarRent;
-import by.chukotka.manager.service.CarRentService;
+import by.chukotka.manager.exeption.BadRequestException;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -21,14 +19,14 @@ import java.util.NoSuchElementException;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping(("catalog/carsRent/{carId:\\d+}"))
-public class ProductController {
+public class CarRentController {
 
-        private final CarRentService carRentService;
+        private final CarsRentRestClient carsRentRestClient;
         private final MessageSource messageSource;
 
     @ModelAttribute("car")
-        public CarRent carRent(@PathVariable("carId") int carId) {
-            return this.carRentService.findCar(carId).orElseThrow(() -> new NoSuchElementException("catalog.errors.carNotFound"));
+        public CarRent car(@PathVariable("carId") int carId) {
+            return this.carsRentRestClient.findCar(carId).orElseThrow(() -> new NoSuchElementException("catalog.errors.carNotFound"));
         }
 
         @GetMapping
@@ -42,24 +40,22 @@ public class ProductController {
         }
 
         @PostMapping("edit")
-        public String carRentEdit(@ModelAttribute(value = "car", binding = false) CarRent car, @Valid UpdateCarRentPayload payload,
-                                  BindingResult bindingResult, Model model) {
-            if (bindingResult.hasErrors()) {
-                model.addAttribute("payload", payload);
-                model.addAttribute("errors", bindingResult.getAllErrors().stream()
-                        .map(ObjectError::getDefaultMessage)
-                        .toList());
-                return "catalog/carsRent/edit";
-            }else{
-                this.carRentService.editCar(car.getId(), payload.brand(), payload.model(), payload.registrationNumber(),
+        public String carRentEdit(@ModelAttribute(value = "car", binding = false) CarRent car, UpdateCarRentPayload payload,
+                                   Model model) {
+            try {
+                this.carsRentRestClient.editCar(car.id(), payload.brand(), payload.model(), payload.registrationNumber(),
                         payload.seats(), payload.rentCost(), payload.type(), payload.gear(), payload.fuel());
-                return "redirect:/catalog/carsRent/%d".formatted(car.getId());
+                return "redirect:/catalog/carsRent/%d".formatted(car.id());
+            } catch (BadRequestException exception) {
+                model.addAttribute("payload", payload);
+                model.addAttribute("errors", exception.getErrors());
+                return "catalog/carsRent/edit";
             }
         }
 
         @PostMapping("delete")
-        public String productDelete(@ModelAttribute("car") CarRent product) {
-            this.carRentService.deleteCar(product.getId());
+        public String carRentDelete(@ModelAttribute("car") CarRent car) {
+            this.carsRentRestClient.deleteCar(car.id());
             return "redirect:/catalog/carsRent/list";
         }
 

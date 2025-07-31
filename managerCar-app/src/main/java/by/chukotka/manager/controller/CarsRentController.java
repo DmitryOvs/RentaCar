@@ -18,8 +18,9 @@ public class CarsRentController {
 
     //  @RequestMapping(value = "list", method = RequestMethod.GET) - тоже что и ниже
     @GetMapping("list")
-    public String getCarsRentList(Model model) {
-        model.addAttribute("cars", this.carsRentRestClient.findAllCars());
+    public String getCarsRentList(Model model, @RequestParam (name = "filter" , required = false) String filter) {
+        model.addAttribute("cars", this.carsRentRestClient.findAllCars(filter));
+        model.addAttribute("filter", filter);
         return "catalog/carsRent/list";
     }
     @GetMapping("create")
@@ -32,7 +33,7 @@ public class CarsRentController {
       try{
         CarRent car = this.carsRentRestClient.createCar(payload.brand(), payload.model(), payload.registrationNumber(),
                 payload.seats(), payload.rentCost(), payload.type(), payload.gear(), payload.fuel());
-        return "redirect:catalog/carsRent/%d".formatted(car.id());
+        return "redirect:/catalog/carsRent/%d".formatted(car.id());
         } catch (BadRequestException exception) {
           model.addAttribute("payload", payload);
           model.addAttribute("errors", exception.getErrors());

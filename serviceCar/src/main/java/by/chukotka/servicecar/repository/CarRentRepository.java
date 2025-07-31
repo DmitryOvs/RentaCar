@@ -3,17 +3,23 @@ package by.chukotka.servicecar.repository;
 
 
 import by.chukotka.servicecar.entity.CarRent;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
-import java.util.List;
-import java.util.Optional;
 
-public interface CarRentRepository {
+public interface CarRentRepository extends JpaRepository<CarRent, Integer> {
 
-    List<CarRent> findAll();
+    @Query(value = "select * from catalog.t_car_rent where c_brand like :filter", nativeQuery = true)
+    Iterable<CarRent> findAllByBrandLikeIgnoreCase(@Param("filter") String filter);
 
-    CarRent save(CarRent car);
 
-    Optional<CarRent> findById(Integer carId);
-
-    void deleteById(Integer id);
 }
+
+// @Query(name = "Car.findAllByBrandLikeIgnoreCase", nativeQuery = true)
+//Iterable<CarRent> findAllByBrandLikeIgnoreCase(@Param("filter") String filter);
+
+// @Query(value = "select cr from CarRent cr where cr.brand like :filter")
+// Iterable<CarRent> findAllByBrandLikeIgnoreCase(@Param("filter") String filter);
+
+// Iterable<CarRent> findAllByBrandLikeIgnoreCase(String filter);

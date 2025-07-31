@@ -2,11 +2,14 @@ package by.chukotka.servicecar.service;
 
 
 import by.chukotka.servicecar.entity.CarRent;
+import by.chukotka.servicecar.entity.Fuel;
+import by.chukotka.servicecar.entity.Gear;
+import by.chukotka.servicecar.entity.TypeCar;
 import by.chukotka.servicecar.repository.CarRentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
@@ -18,13 +21,18 @@ public class CarRentServiceImp implements CarRentService {
 
 
     @Override
-    public List<CarRent> findAllCars() {
-        return this.carRentRepository.findAll();
+    public Iterable<CarRent> findAllCars(String filter) {
+        if (filter == null || filter.isEmpty()) {
+        return this.carRentRepository.findAll();}
+        else {
+            return this.carRentRepository.findAllByBrandLikeIgnoreCase("%" + filter + "%");
+        }
     }
 
     @Override
+    @Transactional
     public CarRent createCar(String brand, String model, String registrationNumber, short seats, int rentCost,
-                             CarRent.TypeCar type, CarRent.Gear gear, CarRent.Fuel fuel) {
+                             TypeCar type, Gear gear, Fuel fuel) {
         return this.carRentRepository.save(new CarRent(null, brand, model, registrationNumber, seats, rentCost, type, gear, fuel));
     }
 
@@ -34,8 +42,9 @@ public class CarRentServiceImp implements CarRentService {
     }
 
     @Override
+    @Transactional
     public void editCar(Integer carId, String brand, String model, String registrationNumber, short seats,
-                        int rentCost, CarRent.TypeCar type, CarRent.Gear gear, CarRent.Fuel fuel) {
+                        int rentCost, TypeCar type, Gear gear, Fuel fuel) {
         this.carRentRepository.findById(carId).ifPresentOrElse(car -> {
             car.setBrand(brand);
             car.setModel(model);
@@ -49,6 +58,7 @@ public class CarRentServiceImp implements CarRentService {
     }
 
     @Override
+    @Transactional
     public void deleteCar(Integer id) {
         this.carRentRepository.deleteById(id);
     }

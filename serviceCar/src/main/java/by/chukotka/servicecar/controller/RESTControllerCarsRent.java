@@ -14,7 +14,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import java.util.List;
 import java.util.Map;
 
 
@@ -26,8 +25,8 @@ public class RESTControllerCarsRent {
     private final CarRentService carRentService;
 
     @GetMapping
-    public List<CarRent> getCarRents() {
-        return this.carRentService.findAllCars();
+    public Iterable<CarRent> getCarRents(@RequestParam (name = "filter", required = false) String filter) {
+        return this.carRentService.findAllCars(filter);
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)//можно не писать
@@ -43,7 +42,7 @@ public class RESTControllerCarsRent {
             CarRent car = this.carRentService.createCar(payload.brand(), payload.model(), payload.registrationNumber(),
                     payload.seats(), payload.rentCost(), payload.type(), payload.gear(), payload.fuel());
             return ResponseEntity.created(uriBuilder
-                    .replacePath("catalog-api/carsRent/{carId}")
+                    .replacePath("/catalog-api/carsRent/{carId}")
                     .build(Map.of("carId", car.getId())))
                     .body(car);
         }

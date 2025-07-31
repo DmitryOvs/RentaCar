@@ -10,14 +10,14 @@ import java.util.Optional;
 
 public interface CarsRentRestClient {
 
-    List<CarRent> findAllCars();
+    List<CarRent> findAllCars(String filter);
 
     CarRent createCar(String brand, String model, String registrationNumber, short seats, int rentCost,
                       TypeCar type, Gear gear, Fuel fuel);
 
     Optional<CarRent> findCar(int carId);
 
-    void editCar(Integer id, String brand, String model, String registrationNumber, short seats,
+    void editCar(int id, String brand, String model, String registrationNumber, short seats,
                  int rentCost, TypeCar type, Gear gear, Fuel fuel);
 
     void deleteCar(int id);

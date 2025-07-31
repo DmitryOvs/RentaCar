@@ -2,13 +2,16 @@ package by.chukotka.servicecar.controller.payload;
 
 
 
-import by.chukotka.servicecar.entity.CarRent;
+
+import by.chukotka.servicecar.entity.Fuel;
+import by.chukotka.servicecar.entity.Gear;
+import by.chukotka.servicecar.entity.TypeCar;
 import jakarta.validation.constraints.*;
 import org.hibernate.validator.constraints.Length;
 
 public record UpdateCarRentPayload(
         @NotNull(message = "{catalog.rentCars.update.errors.brand_is_null")
-        @Length(min = 2, max = 20, message = "{catalog.rentCars.update.errors.brand_length}")
+        @Size(min = 2, max = 20, message = "{catalog.rentCars.update.errors.brand_length}")
         String brand,
 
         @NotNull(message = "{catalog.rentCars.update.errors.model_is_null}")
@@ -27,11 +30,11 @@ public record UpdateCarRentPayload(
         @Min(value = 50, message = "{catalog.rentCars.update.errors.rentCost_is_min}")
         int rentCost,
 
-        CarRent.TypeCar type,
+        TypeCar type,
 
-        CarRent.Gear gear,
+        Gear gear,
 
-        CarRent.Fuel fuel)
+        Fuel fuel)
 {
 
 }

@@ -7,6 +7,11 @@
 <body>
 <a data-th-href="@{/catalog/carsRent/create}">+ Внести в базу новый автомобиль</a>
 <h1>Список автомобилей</h1>
+<form method="get" data-th-action="@{/catalog/catalog/carsRent/list}">
+    <label>Фильтр: <input type="text" name="filter" data-th-value="${filter}">
+        <button type="submit">Поиск</button>
+    </label>
+</form>
 <TABLE>
     <thead>
     <tr>

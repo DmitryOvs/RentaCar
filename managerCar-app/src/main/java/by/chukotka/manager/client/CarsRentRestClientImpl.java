@@ -27,10 +27,10 @@ public class CarsRentRestClientImpl implements CarsRentRestClient {
     };
 
     @Override
-    public List<CarRent> findAllCars() {
+    public List<CarRent> findAllCars(String filter) {
         return this.restClient
                 .get()
-                .uri("/catalog-api/carsRent")
+                .uri("/catalog-api/carsRent?filter=" + filter)
                 .retrieve()
                 .body(CAR_TYPE_REFERENCE);
     }
@@ -40,7 +40,7 @@ public class CarsRentRestClientImpl implements CarsRentRestClient {
         try {
             return this.restClient
                     .post()
-                    .uri("/catalog-api/carsRent/")
+                    .uri("/catalog-api/carsRent")
                     .contentType(MediaType.APPLICATION_JSON)
                     .body(new CreateCarRentPayload(brand, model, registrationNumber, seats, rentCost, type, gear, fuel))
                     .retrieve()
@@ -64,7 +64,7 @@ public class CarsRentRestClientImpl implements CarsRentRestClient {
     }
 
     @Override
-    public void editCar(Integer carId, String brand, String model, String registrationNumber, short seats, int rentCost, TypeCar type, Gear gear, Fuel fuel) {
+    public void editCar(int carId, String brand, String model, String registrationNumber, short seats, int rentCost, TypeCar type, Gear gear, Fuel fuel) {
         try {
             this.restClient
                     .patch()

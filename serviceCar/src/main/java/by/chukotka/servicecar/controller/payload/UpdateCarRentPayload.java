@@ -7,7 +7,6 @@ import by.chukotka.servicecar.entity.Fuel;
 import by.chukotka.servicecar.entity.Gear;
 import by.chukotka.servicecar.entity.TypeCar;
 import jakarta.validation.constraints.*;
-import org.hibernate.validator.constraints.Length;
 
 public record UpdateCarRentPayload(
         @NotNull(message = "{catalog.rentCars.update.errors.brand_is_null")

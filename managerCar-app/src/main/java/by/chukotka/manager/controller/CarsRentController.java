@@ -3,11 +3,14 @@ package by.chukotka.manager.controller;
 import by.chukotka.manager.client.CarsRentRestClient;
 import by.chukotka.manager.controller.payload.CreateCarRentPayload;
 import by.chukotka.manager.entity.CarRent;
-import by.chukotka.manager.exeption.BadRequestException;
+import by.chukotka.manager.exception.BadRequestException;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.security.Principal;
 
 @Controller
 @RequiredArgsConstructor
@@ -18,7 +21,9 @@ public class CarsRentController {
 
     //  @RequestMapping(value = "list", method = RequestMethod.GET) - тоже что и ниже
     @GetMapping("list")
-    public String getCarsRentList(Model model, @RequestParam (name = "filter" , required = false) String filter) {
+    public String getCarsRentList(Model model, @RequestParam (name = "filter" , required = false) String filter,
+                                  Principal principal) {
+        LoggerFactory.getLogger(CarRent.class).info("User {}", principal); // просто вывод информации об авторизированном пользователе
         model.addAttribute("cars", this.carsRentRestClient.findAllCars(filter));
         model.addAttribute("filter", filter);
         return "catalog/carsRent/list";

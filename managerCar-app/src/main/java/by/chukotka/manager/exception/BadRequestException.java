@@ -1,4 +1,4 @@
-package by.chukotka.manager.exeption;
+package by.chukotka.manager.exception;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;

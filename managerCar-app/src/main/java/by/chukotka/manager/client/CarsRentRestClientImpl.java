@@ -6,7 +6,7 @@ import by.chukotka.manager.entity.CarRent;
 import by.chukotka.manager.entity.Fuel;
 import by.chukotka.manager.entity.Gear;
 import by.chukotka.manager.entity.TypeCar;
-import by.chukotka.manager.exeption.BadRequestException;
+import by.chukotka.manager.exception.BadRequestException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.MediaType;

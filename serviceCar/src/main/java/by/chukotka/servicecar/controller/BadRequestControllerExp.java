@@ -1,4 +1,4 @@
-package by.chukotka.servicecar;
+package by.chukotka.servicecar.controller;
 
 
 import lombok.RequiredArgsConstructor;

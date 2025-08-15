@@ -3,7 +3,7 @@ package by.chukotka.manager.controller;
 import by.chukotka.manager.client.CarsRentRestClient;
 import by.chukotka.manager.controller.payload.UpdateCarRentPayload;
 import by.chukotka.manager.entity.CarRent;
-import by.chukotka.manager.exeption.BadRequestException;
+import by.chukotka.manager.exception.BadRequestException;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.MessageSource;
